@@ -1,0 +1,434 @@
+<html>
+    <head>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+       <title>Multiplayer</title>
+       <meta name="viewport" content="width=device-width, initial-scale=1">
+       <style>
+           .dropdown:hover .dropdown-menu {
+        display: block;
+        } 
+        body{
+            margin: auto;
+            padding: auto;
+            background: linear-gradient(320deg,#240b36, #c31432 82%);
+            width: 100%;
+            height: 100%;
+            margin: 3%;
+
+        }
+        .red{
+            background-color:red;
+        }
+        .aqua{
+            background-color:aqua;
+        }
+       #container{
+           margin-top:100px;
+        width: 700px;
+        height:700px;
+        margin-left:25%;
+        border-radius: 15px;
+        background: linear-gradient(-180deg, white,ghostwhite);
+        opacity: .9;   
+        box-shadow: -1px -3px 27px 5px rgb(189, 189, 189) inset;
+
+       }
+       .draw{
+        position: absolute;
+    margin-left: 0%;
+    margin-top: 0%;
+    padding-left: 4%;
+    padding-top: 8%;
+    width: 32%;
+    height: 41%;
+    font-size: 575%;
+    text-shadow: 0 0 11px white;
+       }
+       h2{
+           text-align: center;
+           font-size: 235%;
+       }
+        table{
+        margin: auto;
+        width:85%;
+        height:85%;
+        border-radius:20px;
+        background-color: black;
+        }
+        table, th, td {
+        border-collapse: collapse;
+        text-align: center;
+        }
+        input{
+            margin-left: 40%;
+        width: 22%;
+        height: 8%;
+        text-align: center;
+        font-size: 205%;
+        border-radius: 10px;
+        }
+
+        #winningStatement{
+            position: absolute;
+    margin-left: 100px;
+    margin-top: 0%;
+    padding-left: 0%;
+    padding-top: 165px;
+    width: 475px;
+    font-size: 575%;
+
+    font-size: 575%;
+        }
+        table { 
+            border-spacing: 3px;
+            border-collapse: separate;
+}
+        .xWins{
+            text-shadow: 0 0 11px aqua;
+            
+        }
+        .oWins{
+            text-shadow: 0 0 11px red;
+           
+        }
+        .oCell{
+            margin:0px;
+            padding:0px;
+            font-size:45px;
+
+        }
+        .xCell{
+            margin:0px;
+            padding:0px;
+            font-size:84px;
+
+        }
+        .sub{
+            
+            color:black;
+            display:inline-block;
+            width: 75%;
+            height:75%;
+            vertical-align: top;
+           
+            margin:12%
+        }
+
+            /* td:first-of-type {
+            border-right: 3.5px solid black;
+
+            } */
+            /* tr:nth-of-type(2) {
+            border-bottom: 3.5px solid black;
+            } */
+            /* td:nth-of-type(2) {
+            border-left: 3.5px solid black;
+            border-right: 3.5px solid black;
+            }
+            tr:first-of-type td:nth-of-type(2){
+                border-bottom: 3.5px solid black;
+            }
+            tr:last-of-type td:nth-of-type(2){
+                border-top: 3.5px solid black;
+            }
+            tr:nth-of-type(2) td{
+            border-top: 3.5px solid black;
+            border-bottom: 3.5px solid black;
+            }
+            tr:nth-of-type(2) td:first-of-type{
+            border-right: 3.5px solid black;
+            }
+            tr:nth-of-type(2) td:last-of-type{
+            border-left: 3.5px solid black;
+            } */
+            td{
+            
+            font-size: 189%;
+            box-shadow: -1px -3px 27px 5px rgb(189, 189, 189) inset;
+            background-color:whitesmoke;
+            margin:1px;
+            width: 100px;
+            height: 100px;
+            border-radius:18px;
+            }
+
+       </style>
+       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+       <script> 
+    //        setInterval( function(){
+    //         location.reload();
+    //         $.ajax({
+    //                     url:'{% url "game:reloadDiv" %}',
+    //                     method: 'get',
+                        
+    //                     success: function(serverResponse) {
+    //                         $("#reload").html(serverResponse)
+    //                     }
+    //             })
+    //         var currentVal =$('#reloaditem').attr('value');
+    //         if (currentVal ==1){
+                
+    //             location.reload();
+    //         }
+            
+       
+    //    }, 5000);
+        </script>
+       <script type="text/javascript">
+           $(document).ready(function(){
+            var winningFlag = 0;
+               var board ="{{scoreboard}}".split(",")
+               console.log(scoreboard)
+            $('#inputanswer').hide(); 
+            
+            var turns = 0;
+            var tdselected = [];
+            var backgroundColor = "";
+            $('table').html("{{board | safe}}");
+            for(var i =0; i<3;i++){
+                                    if(board[i] == 'x' && board[i+1] == 'x' && board[i+2]=='x'){
+                                        winningFlag = 1;
+                                    }
+                                    if(board[i] == 'o' && board[i+1] == 'o' && board[i+2]=='o'){
+                                        winningFlag = 2;
+                                    }
+                                    if(board[i] == 'x' && board[i+3] == 'x' && board[i+6]=='x'){
+                                        winningFlag = 1;
+                                    }
+                                    if(board[i] == 'o' && board[i+3] == 'o' && board[i+6]=='o'){
+                                        winningFlag = 2;
+                                    }
+                                    
+                                }
+                                    if(board[2] == 'x' && board[4] == 'x' && board[6]=='x'){
+                                        winningFlag = 1;
+                                    }
+                                    if(board[2] == 'o' && board[4] == 'o' && board[6]=='o'){
+                                        winningFlag = 2;
+                                    }
+                                    if(board[0] == 'x' && board[4] == 'x' && board[8]=='x'){
+                                        winningFlag = 1;
+                                    }
+                                    if(board[0] == 'o' && board[4] == 'o' && board[8]=='o'){
+                                        winningFlag = 2;
+                                    } 
+                                    
+                                if(winningFlag ==1){
+                                    $('.sub').prepend('<h1 id = "winningStatement" class = "xWins">X WINS!</h1>')
+                                    $('.inputForm').hide();
+                                }
+                                else if(winningFlag ==2){
+                                    $('.sub').prepend('<h1 id = "winningStatement" class = "oWins">O WINS!</h1>')
+                                    $('.inputForm').hide();
+                                }
+                                else if (turns ==9) {
+                                    $('.sub').prepend('<h1 class = "draw">Draw, No Winner</h1>')
+                                    $('.inputForm').hide();
+                                }
+                
+                $('td').hover(function(){
+                 
+                    if (tdselected[0] ==null){
+                    backgroundColor = $(this).css('background-color')
+
+                    if($(this).children().attr('class')==undefined){
+                      
+                        if( backgroundColor == 'rgb(245, 245, 245)'){
+                        $(this).css('background-color','red')
+                        }
+                    }
+                    }
+                }, function(){
+                  
+                    if($(this).children().attr('class')==undefined){
+                    if (tdselected[0] ==null){
+                        
+                    $(this).css('background-color','whitesmoke')
+                    
+                    }
+                }
+                }
+                );
+                var answer = 0;
+                $('td').click(function(){
+                    if( winningFlag ==0){  
+                        if($(this).children().attr('class')==undefined){
+                        $('#'+tdselected.pop()).css('background-color','whitesmoke');
+                        $('h2').empty();
+                        $('input').val('');
+
+                        tdselected.push($(this).attr('id'));
+
+                        $('#inputanswer').show();
+
+                        $('h2').append($(this).text());
+                        $(this).css('background-color','red')
+                        answer = $(this).attr('class');          
+                        
+                    }
+                    }
+                    
+                });
+                $('#inputanswer').keyup(function(){
+                            
+                            console.log("ANSER",answer,"INPUT",$('#inputanswer').val() )
+            
+                            if($('#inputanswer').val() == answer){
+                             
+                                // $.ajax({
+                                //     url:'{% url "game:incermentTurn" %}',
+                                //     method: 'get',
+                                //     success: function(serverResponse) {
+                                //     $("#reload").html(serverResponse)
+                                // }
+                                // })
+                                
+                                console.log("TURNS START", turns)
+                                console.log("TD SELECTED", tdselected[0])
+                                if(tdselected[0]!=undefined){
+                                    
+                                    turns++;
+                                }
+                                console.log(board)
+                                var correctCell = tdselected.pop()
+                                $('#'+correctCell).html('<h1 class = "oCell"> &#x25EF</h1>');
+                                $('#'+correctCell).attr('class','red');
+                                board[correctCell[0]] = 'o';
+   
+                                console.log(correctCell[0])
+                                console.log("BOARD", board)
+                                for(var i =0; i<3;i++){
+                                    if(board[i] == 'x' && board[i+1] == 'x' && board[i+2]=='x'){
+                                        winningFlag = 1;
+                                    }
+                                    if(board[i] == 'o' && board[i+1] == 'o' && board[i+2]=='o'){
+                                        winningFlag = 2;
+                                    }
+                                    if(board[i] == 'x' && board[i+3] == 'x' && board[i+6]=='x'){
+                                        winningFlag = 1;
+                                    }
+                                    if(board[i] == 'o' && board[i+3] == 'o' && board[i+6]=='o'){
+                                        winningFlag = 2;
+                                    }
+                                    
+                                }
+                                    if(board[2] == 'x' && board[4] == 'x' && board[6]=='x'){
+                                        winningFlag = 1;
+                                    }
+                                    if(board[2] == 'o' && board[4] == 'o' && board[6]=='o'){
+                                        winningFlag = 2;
+                                    }
+                                    if(board[0] == 'x' && board[4] == 'x' && board[8]=='x'){
+                                        winningFlag = 1;
+                                    }
+                                    if(board[0] == 'o' && board[4] == 'o' && board[8]=='o'){
+                                        winningFlag = 2;
+                                    } 
+                                    
+                                if(winningFlag ==1){
+                                    $('.sub').prepend('<h1 id = "winningStatement" class = "xWins">X WINS!</h1>')
+                                    $('.inputForm').hide();
+                                }
+                                else if(winningFlag ==2){
+                                    $('.sub').prepend('<h1 id = "winningStatement" class = "oWins">O WINS!</h1>')
+                                    $('.inputForm').hide();
+                                }
+                                else if (turns ==9) {
+                                    $('.sub').prepend('<h1 class = "draw">Draw, No Winner</h1>')
+                                    $('.inputForm').hide();
+                                }
+                                
+                                var updatedTable = $('table').html();
+                                
+                            
+                                $('#boardform').attr('value',updatedTable)
+                                $('#scoreboard').attr('value',board)
+                                $('#winner').attr('value',winningFlag)
+                                $('form').submit()
+                                
+                            }
+                            });
+        
+     
+        })
+        </script>
+
+    </head>
+    <body>
+        <div id = 'container' class="pt-5">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top mb-5" >
+                <a class="navbar-brand" href="#">Tic-Tac-Toe</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+              
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                  <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                      <a class="nav-link" href="{% url 'home:index' %}">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Create Online Match
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="home/createMatch/1">Easy</a>
+                            <a class="dropdown-item" href="home/createMatch/2">Medium</a>
+                            <a class="dropdown-item" href="home/createMatch/3">Hard</a>
+                            <a class="dropdown-item" href="home/createMatch/4">Advanced</a>
+                            </div>
+                        </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'home:matchRoom' %}">Open Online Match</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Computer Match
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="/gamecomputer/1">Easy</a>
+                            <a class="dropdown-item" href="/gamecomputer/2">Medium</a>
+                            <a class="dropdown-item" href="/gamecomputer/3">Hard</a>
+                            <a class="dropdown-item" href="/gamecomputer/4">Advanced</a>
+                            </div>
+                        </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'home:stats' %}">Stats</a>
+                    </li>
+                    
+                  </ul>
+                  <a class="nav-link" href="{% url 'home:logout' %}">Logout</a>
+
+                </div>
+            </nav>
+        <div class ='sub mt-5'>
+                    
+                     <table>
+
+                     </table>  
+                     <div class ='inputForm'>
+                            
+                                <h2></h2>
+                                <input type = "text" id = 'inputanswer'>
+                                <form action='/gameupdate'>
+                                    <input type="hidden" name ="board" id ='boardform'>
+                                    <input type="hidden" name ="scoreboard" id ='scoreboard'>
+                                    <input type = "hidden" name ="winner" id = "winner">    
+                                </form>
+                    </div>  
+                    
+                </div>
+         
+                
+                <div id="reload">
+                        
+                
+                    </div>
+                     
+             
+              
+      
+          </body>
+      </html>
+      
